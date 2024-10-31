@@ -33,4 +33,3 @@ pub async fn echo(Json(payload): Json<models::Greeting>) -> Json<models::Greetin
         message: format!("Echo: {}", payload.message),
     })
 }
-

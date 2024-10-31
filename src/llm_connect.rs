@@ -12,7 +12,7 @@ fn get_openai_client() -> OpenAIClient {
 }
 fn parse_json(json_text: &str) -> Option<LLMResponse> {
     println!("JSON data: {:?}", json_text);
-    let start = json_text.find('{')?;
+    let start = json_text.find('{')?; //less work than a regex match
     let end = json_text.rfind('}')?;
     let json_text = json_text[start..=end].to_string();
     serde_json::from_str::<Option<LLMResponse>>(json_text.as_str()).expect("Invalid JSON: ")

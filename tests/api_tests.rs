@@ -61,4 +61,3 @@ async fn test_echo() {
     // Validate that the response contains the echoed message
     assert_eq!(json, json!({ "message": "Echo: Hello, world!" }));
 }
-

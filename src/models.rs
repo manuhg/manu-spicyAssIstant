@@ -6,7 +6,7 @@ pub struct Greeting {
     pub message: String,
 }
 #[derive(Serialize, Deserialize, Debug)]
-pub struct LLMResponse{
+pub struct LLMResponse {
     pub sql_query: String,
-    pub query_desc: String
+    pub query_desc: String,
 }
