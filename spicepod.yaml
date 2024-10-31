@@ -1,0 +1,30 @@
+version: v1beta1
+kind: Spicepod
+name: manu_spicy_assistant
+
+secrets:
+  - from: env
+    name: SQL_DB_CONN_STR
+  - from: env
+    name: DBRS_ACCESS_TOKEN
+
+datasets: # source for the following datasets: https://catalog.data.gov/dataset/?publisher=data.wa.gov&organization=state-of-washington
+  - from: mssql:dbo.wa_ev_population_data # contains a high level view of EV ownership in Washington state
+    name: wa_ev_population_data
+    params:
+      mssql_connection_string: ${secrets:SQL_DB_CONN_STR}
+
+  - from: databricks:mh_az_expts.default.wa_ev_registration_activity  # Contains 1M+ entries of Title and registration changes of EV's in Washington state.
+    name: wa_ev_registration_activity_dbrs
+    params:
+      mode: spark_connect
+      databricks_endpoint: adb-3279955246209461.1.azuredatabricks.net
+      databricks_token: ${secrets:DBRS_ACCESS_TOKEN} # Use the key `my_token` from any secret store
+      databricks_cluster_id: 1031-002456-iwyj96de
+
+runtime:
+  results_cache:
+    enabled: true
+    cache_max_size: 128MiB
+    eviction_policy: lru
+    item_ttl: 1s

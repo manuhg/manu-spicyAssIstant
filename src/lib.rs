@@ -5,7 +5,8 @@ use axum::{
     Router, Json,
     extract::Path};
 pub mod models;
-
+pub mod constants;
+pub mod llm_connect;
 
 //Set up all the api routes
 pub fn setup_router() -> Router {

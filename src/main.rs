@@ -1,6 +1,6 @@
 use std::net::SocketAddr;
 use manu_spicy_assistant::setup_router;
-mod constants;
+pub mod constants;
 
 #[tokio::main]
 async fn main() {
