@@ -1,10 +1,11 @@
 use manu_spicy_assistant;
+use manu_spicy_assistant::clients::get_openai_client;
 use manu_spicy_assistant::llm_connect::talk_to_llm;
 
 #[tokio::test]
 async fn test_llm_response() {
     let user_input = "Hi, can you please tell me how many BMW evs are present in washington state in 2024?";
-    let response = talk_to_llm(user_input.to_string()).await.unwrap();
+    let response = talk_to_llm(user_input.to_string(),  get_openai_client()).await.unwrap();
 
     // Assert that the response is not None
     assert!(response.is_some(), "Response should not be None!");

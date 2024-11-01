@@ -1,8 +1,8 @@
+use openai_api_rs::v1::api::OpenAIClient;
 use openai_api_rs::v1::chat_completion::{self, ChatCompletionRequest};
 use openai_api_rs::v1::common::GPT4_O;
 
 use crate::{constants};
-use crate::clients::get_openai_client;
 use crate::models::LLMResponse;
 
 
@@ -14,8 +14,7 @@ fn parse_json(json_text: &str) -> Option<LLMResponse> {
     serde_json::from_str::<Option<LLMResponse>>(json_text.as_str()).expect("Invalid JSON: ")
     // Convert Result to Option, returning None if there's an error
 }
-pub async fn talk_to_llm(user_input: String) -> Result<Option<LLMResponse>, Box<dyn std::error::Error>> {
-    let client = get_openai_client();
+pub async fn talk_to_llm(user_input: String, llm_client: OpenAIClient) -> Result<Option<LLMResponse>, Box<dyn std::error::Error>> {
     let req = ChatCompletionRequest::new(
         GPT4_O.to_string(),
         vec![chat_completion::ChatCompletionMessage {
@@ -33,7 +32,7 @@ pub async fn talk_to_llm(user_input: String) -> Result<Option<LLMResponse>, Box<
         }],
     );
 
-    let result = client.chat_completion(req).await?;
+    let result = llm_client.chat_completion(req).await?;
     let json_data = match result.choices[0].message.content.clone() {
         Some(content) => content,
         None => return Err("Cannot find valid JSON from LLM response".into()),

@@ -2,6 +2,7 @@
 
 pub const SERVER_HOST: [u8; 4] = [127, 0, 0, 1];
 pub const SERVER_PORT: u16 = 3000;
+pub const MAX_SQL_QUERY_STR_LEN:usize=1000;
 pub const LLM_PRE_PROMPT: &str = "Construct a spark-sql type sql query that obtains the answer for the user query below, using the following table definitions. Avoid joining the tables unless absolutely necessary.\
 Table Definitions:
 CREATE TABLE wa_ev_population_data (vin VARCHAR(10),county VARCHAR(50),city VARCHAR(50),state CHAR(2),postal_code VARCHAR(10),model_year SMALLINT,make VARCHAR(30),model VARCHAR(30),electric_vehicle_type VARCHAR(50),cafv_eligibility VARCHAR(100),electric_range SMALLINT,base_msrp DECIMAL(10, 2),legislative_district SMALLINT,dol_vehicle_id BIGINT,vehicle_location GEOGRAPHY,electric_utility VARCHAR(100),census_tract BIGINT);\
