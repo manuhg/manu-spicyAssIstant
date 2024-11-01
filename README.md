@@ -6,30 +6,34 @@ The idea is to demonstrate Spice.ai's capability to seamlessly query across mult
 
 ## How to run
 - Install spice ai on your machine
-- Run `env_gen_hack.sh` to generate .env file with necessary credentials
+- Run env_gen_hack.sh to generate the .env file with necessary credentials
 - Run the spice ai server locally with the command `spice run`
 - Run the `manu_spicy_assistant` crate
 - This runs the server at `localhost:3000`
-- Use your favourite API testing tool (eg: [Postman](https://www.postman.com/)) to test the API endpoints. For examples, please look at [sample runs](#sample-runs)  
+- Use your favourite API testing tool (eg: [Postman](https://www.postman.com/)) to test the API endpoints.  
+Think of a question regarding electric vehicle population or registrations in Washington state. Type your question in the format shown below.  
+
+Note: If you ask questions regarding EV registration activity, it may take a couple of minutes at first, since `wa_ev_registration_activity` table resides in Databricks. The databricks cluster will take few minutes to boot up and shuts down after 10 minutes of idle time.
+For examples, please look at [sample runs](#sample-runs)  
   
-Note: If you ask questions regarding EV registration activity, it may take a couple of minutes in the beggining since `wa_ev_registration_activity` table resides in Databricks. The cluster will take few minutes to boot up the first time and shuts down after 10 mins of idle time.
+
 ## API Endpoints
 - `GET /` (api root): Gives a welcome message 
 - `GET /greet/:name`: Greets the user
 - `POST /assist_user`: Assists the user with queries on electric vehicle population and registrations in Washington state
   - input: Expects JSON with a field called 'message'  
-        ex: `{"message":"Hi, can you please tell me how many electric vehicles have been registered in washington in 2024?"}`
+        ex: `{"message":"Hi, can you please tell me how many electric vehicles have been registered in Washington in 2024?"}`
   - response: Returns a JSON with `data` field and `message` field to explain the data.   
         ex:`{ "message": "This query counts the number of BMW electric vehicles present in Washington state for the model year 2024.",  
               "data": [ {"bmw_ev_count": 1920 } ]
              }`  
 ![assist user api workflow](./docs/images/spiceai-take-home-assignment-diag.png)
-> Note: The project was developed with a local server of Spice.ai OSS. Storing credentials in plaintext isn't recommended. However in the present scenario where the interviwer needs to run the code independently on their machine, credentials need to be stored somewhere convenient. Hence, as a hack, I have base64 encoded and stored all the necessary credentials in the bash script  `env_gen_hack.sh`.
+> Note: The project was developed with a local server of Spice.ai OSS. Storing credentials in plaintext isn't recommended. However in the present scenario where the interviwer would like to run the code independently on their machine, credentials need to be stored somewhere accessible. Hence, as a hack, I have base64 encoded and stored all the necessary credentials in the bash script  `env_gen_hack.sh`.
 
 ## Data description
 Two datasets are currently used.
-- **wa_ev_population_data** : A very small table with 210K rows/~50MB of data that resides in Microsoft SQL server db in Azure Cloud. Contains data regarding the electric vehicles in washington state.
-- **wa_ev_registration_activity** : A larger table with 1.1Mn rows/~500MB of data that resides as a delta table in Azure Databricks. Contains records of electric vehicle registrations in washington state.
+- **wa_ev_population_data** : A small table with 210K rows/~50MB of data that resides in Microsoft SQL server db in Azure Cloud. Contains data regarding the electric vehicles in Washington state.
+- **wa_ev_registration_activity** : A larger table with 1.1Mn rows/~500MB of data that resides as a delta table in Azure Databricks. Contains records of electric vehicle registrations in Washington state.
 
 ## Sample Runs
 - from `wa_ev_population_data` (MS SQL Server):  
