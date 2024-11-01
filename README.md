@@ -25,17 +25,17 @@ Note: If you ask questions regarding EV registration activity, it may take a cou
   - response: Returns a JSON with `data` field and `message` field to explain the data.   
         ex:`{ "message": "This query counts the number of BMW electric vehicles present in Washington state for the model year 2024.",  
               "data": [ {"bmw_ev_count": 1920 } ]
-             }`
-
+             }`  
+![assist user api workflow](./docs/images/spiceai-take-home-assignment-diag.png)
 > Note: The project was developed with a local server of Spice.ai OSS. Since storing credentials in plaintext isn't recommended. However in the present scenario where the interviwer needs to run the code independently on their machine, credentials need to be stored somewhere convenient. Hence, as a hack, I have base64 encoded and stored all the necessary credentials in the bash script  `env_gen_hack.sh`.
 
 ## Sample Runs
-- from `wa_ev_population_data`:  
+- from `wa_ev_population_data` (MS SQL Server):  
   `curl --location 'localhost:3000/assist_user' \
   --header 'Content-Type: application/json' \
   --data '{"message":"Hi, can you please tell me how many electric vehicles are present in washington state in 2024?"}'`
   ![Sample Run: EV Population in WA](./docs/images/ev_population_sample.png)
-- from `wa_ev_registration_activity`:    
+- from `wa_ev_registration_activity` (Databricks Delta):    
 `curl --location 'localhost:3000/assist_user' \
 --header 'Content-Type: application/json' \
 --data '{"message":"Hi, can you please tell me how many electric vehicles have been registered in washington in 2024?"}'`
