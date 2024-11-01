@@ -1,15 +1,11 @@
-use std::env;
-use openai_api_rs::v1::api::OpenAIClient;
 use openai_api_rs::v1::chat_completion::{self, ChatCompletionRequest};
 use openai_api_rs::v1::common::GPT4_O;
 
 use crate::{constants};
+use crate::clients::get_openai_client;
 use crate::models::LLMResponse;
 
-fn get_openai_client() -> OpenAIClient {
-    dotenv::dotenv().ok().expect("Failed to load .env file");
-    OpenAIClient::new(env::var("OPENAI_API_KEY").unwrap().to_string())
-}
+
 fn parse_json(json_text: &str) -> Option<LLMResponse> {
     println!("JSON data: {:?}", json_text);
     let start = json_text.find('{')?; //less work than a regex match

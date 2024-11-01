@@ -1,11 +1,12 @@
 // define all the server endpoints
-
 use axum::{
     routing::{get, post},
     Router, Json,
     extract::Path};
+
 pub mod models;
 pub mod constants;
+pub mod clients;
 pub mod llm_connect;
 
 //Set up all the api routes

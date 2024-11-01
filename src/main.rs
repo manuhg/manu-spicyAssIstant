@@ -4,6 +4,7 @@ pub mod constants;
 
 #[tokio::main]
 async fn main() {
+    dotenv::dotenv().ok().expect("Failed to load .env file");
     // Define the routes
     let app = setup_router();
 
