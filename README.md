@@ -1,11 +1,8 @@
 # Spice AI Take-Home Assessment
 
-Welcome to [Manu Hegde](github.com/manuhg)'s Spice AI take-home assessment. This repository implements a simple user assistant robot that leverages ChatGPT along with data from Microsoft SQL Server database and Databricks delta tables.
+Welcome to [Manu Hegde](https://github.com/manuhg)'s Spice AI take-home assessment. This repository implements a simple user assistant robot that leverages Spice.ai OSS and ChatGPT to explore data from tables stored in one small and one large tables stored at Microsoft SQL Server database and Databricks delta respectively.
 
-Two datasets are currently used. 
-- **wa_ev_population_data** : A very small table with 210K rows/~50MB of data that resides in Microsoft SQL server db in Azure Cloud. Contains data regarding the electric vehicles in washington state.
-- **wa_ev_registration_activity** : A larger table with 1.1Mn rows/~500MB of data that resides as a delta table in Azure Databricks. Contains records of electric vehicle registrations in washington state.
-
+The idea is to demonstrate Spice.ai's capability to seamlessly query across multiple environments. The aim is to simulate a setup where a smaller set of, perhaps recent data is present in a SQL DB and much larger set of/older data is present in Data Lake.
 
 ## How to run
 - Install spice ai on your machine
@@ -27,7 +24,12 @@ Note: If you ask questions regarding EV registration activity, it may take a cou
               "data": [ {"bmw_ev_count": 1920 } ]
              }`  
 ![assist user api workflow](./docs/images/spiceai-take-home-assignment-diag.png)
-> Note: The project was developed with a local server of Spice.ai OSS. Since storing credentials in plaintext isn't recommended. However in the present scenario where the interviwer needs to run the code independently on their machine, credentials need to be stored somewhere convenient. Hence, as a hack, I have base64 encoded and stored all the necessary credentials in the bash script  `env_gen_hack.sh`.
+> Note: The project was developed with a local server of Spice.ai OSS. Storing credentials in plaintext isn't recommended. However in the present scenario where the interviwer needs to run the code independently on their machine, credentials need to be stored somewhere convenient. Hence, as a hack, I have base64 encoded and stored all the necessary credentials in the bash script  `env_gen_hack.sh`.
+
+## Data description
+Two datasets are currently used.
+- **wa_ev_population_data** : A very small table with 210K rows/~50MB of data that resides in Microsoft SQL server db in Azure Cloud. Contains data regarding the electric vehicles in washington state.
+- **wa_ev_registration_activity** : A larger table with 1.1Mn rows/~500MB of data that resides as a delta table in Azure Databricks. Contains records of electric vehicle registrations in washington state.
 
 ## Sample Runs
 - from `wa_ev_population_data` (MS SQL Server):  
