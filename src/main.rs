@@ -4,9 +4,8 @@ pub mod constants;
 
 #[tokio::main]
 async fn main() {
-    dotenv::dotenv().ok().expect("Failed to load .env file");
-    // Define the routes
-    let app = setup_router();
+    dotenv::dotenv().expect("Failed to load .env file");
+    let app = setup_router(); // Define the routes
 
     // Define the address to bind to
     let addr = SocketAddr::from((constants::SERVER_HOST, constants::SERVER_PORT));

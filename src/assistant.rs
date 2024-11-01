@@ -4,10 +4,13 @@ use crate::clients::get_necessary_clients;
 use crate::llm_connect::talk_to_llm;
 use crate::constants::MAX_SQL_QUERY_STR_LEN;
 use crate::models::AssistantResponse;
+use arrow_flight;
+use arrow_flight::decode::FlightRecordBatchStream;
 
 pub async fn assist_user(user_query: String) -> Result<AssistantResponse, String> {
     let clients = get_necessary_clients().await;
     let mut spiceai_client = clients.spice_ai;
+
 
     let llm_resp = talk_to_llm(user_query, clients.open_ai).await
         .expect("Unable to fetch response from the LLM")
@@ -17,12 +20,15 @@ pub async fn assist_user(user_query: String) -> Result<AssistantResponse, String
     }
 
 
-    let mut results: Vec<Value> = Vec::new(); // Vector to hold the extracted data
-
-
-    let mut flight_data_stream = spiceai_client.query(llm_resp.sql_query.as_str()).
+    let flight_data_stream = spiceai_client.query(llm_resp.sql_query.as_str()).
         await.expect("Exception fetching data from spice client");
+    let results = fetch_results_as_json(flight_data_stream).await;
 
+
+    Ok(AssistantResponse { message: llm_resp.query_desc, data: results })
+}
+async fn fetch_results_as_json(mut flight_data_stream: FlightRecordBatchStream) -> Vec<Value> {
+    let mut results: Vec<Value> = Vec::new(); // Vector to hold the extracted data
     while let Some(batch) = flight_data_stream.next().await {
         match batch {
             // Write the record batch out as a JSON array
@@ -42,7 +48,6 @@ pub async fn assist_user(user_query: String) -> Result<AssistantResponse, String
             }
         };
     }
-
-    Ok(AssistantResponse { message: llm_resp.query_desc, data: results })
+    results
 }
 

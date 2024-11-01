@@ -15,7 +15,7 @@ datasets: # source for the following datasets: https://catalog.data.gov/dataset/
       mssql_connection_string: ${secrets:SQL_DB_CONN_STR}
 
   - from: databricks:mh_az_expts.default.wa_ev_registration_activity  # Contains 1M+ entries of Title and registration changes of EV's in Washington state.
-    name: wa_ev_registration_activity_dbrs
+    name: wa_ev_registration_activity
     params:
       mode: spark_connect
       databricks_endpoint: adb-3279955246209461.1.azuredatabricks.net
