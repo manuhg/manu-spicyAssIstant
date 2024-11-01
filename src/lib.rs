@@ -4,6 +4,7 @@ use axum::{
     Router, Json,
     extract::Path};
 use crate::assistant::assist_user;
+use crate::models::AssistantResponse;
 
 pub mod models;
 pub mod constants;
@@ -40,6 +41,6 @@ pub async fn echo(Json(payload): Json<models::Greeting>) -> Json<models::Greetin
 }
 
 // Handler for echoing back a JSON message
-pub async fn assist_user_api(Json(payload): Json<models::Greeting>) -> Json<(String, Vec<String>)> {
+pub async fn assist_user_api(Json(payload): Json<models::UserInput>) -> Json<AssistantResponse> {
     Json(assist_user(payload.message).await.expect("HTTP 500: Exception fetching response from user assistant"))
 }
