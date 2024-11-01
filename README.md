@@ -1,6 +1,6 @@
 # Spice AI Take-Home Assessment
 
-Welcome to [Manu Hegde](https://github.com/manuhg)'s Spice AI take-home assessment. This repository implements a simple user assistant robot that leverages Spice.ai OSS and ChatGPT to explore data from tables stored in one small and one large tables stored at Microsoft SQL Server database and Databricks delta respectively.
+Welcome to [Manu Hegde](https://github.com/manuhg)'s Spice AI take-home assessment. This repository implements a simple user assistant micro-service that leverages Spice.ai OSS and ChatGPT to explore data from one small and one large table stored at Microsoft SQL Server database and Databricks delta respectively.
 
 The idea is to demonstrate Spice.ai's capability to seamlessly query across multiple environments. The aim is to simulate a setup where a smaller set of, perhaps recent data is present in a SQL DB and much larger set of/older data is present in Data Lake.
 
